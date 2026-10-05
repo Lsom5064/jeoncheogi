@@ -4,7 +4,7 @@
 
 [GitHub Pages 주소](https://lsom5064.github.io/jeoncheogi/) · [공개 저장소](https://github.com/Lsom5064/jeoncheogi) · [기존 공개 웹사이트](https://jeongcheogi-practical-class-2026.knu-hai-5040.chatgpt.site)
 
-GitHub 저장소 이름은 요청한 `jeoncheogi`로 변경했고 GitHub Actions 기반 Pages를 활성화했습니다. 배포 성공 여부와 최신 버전은 저장소 Actions에서 확인합니다. 새 Pages 배포가 성공하기 전에는 기존 공개 웹사이트를 사용합니다.
+GitHub 저장소 이름은 요청한 `jeoncheogi`로 변경했고 GitHub Actions 기반 Pages 배포를 완료했습니다. 새 주소에서 80문항과 웹 자산의 정상 로드를 확인했습니다. 이후 배포 상태와 최신 버전은 저장소 Actions에서 확인합니다. 기존 공개 웹사이트도 유지합니다.
 
 ## 구성
 
