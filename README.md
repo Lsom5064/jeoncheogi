@@ -1,6 +1,6 @@
 # 정보처리기사 실기 공개 수업자료
 
-2026년 10월 25일 오전 수업을 위한 정적 웹사이트입니다. 날짜별 커리큘럼과 21일 개별 학습 페이지, 9개 분야 55주제 상세 이론 및 분야별 문제 페이지, 8문항 진단, 90문항 답안 입력·채점, 모의고사, 최종 점검 자료를 별도 페이지로 제공합니다.
+2026년 10월 25일 오전 수업을 위한 정적 웹사이트입니다. 날짜별 커리큘럼과 21일 개별 학습 페이지(당일 범위 이론과 풀이 포함), 9개 분야 55주제 상세 이론 및 분야별 문제 페이지, 8문항 진단, 90문항 답안 입력·채점, 모의고사, 최종 점검 자료를 별도 페이지로 제공합니다.
 
 [GitHub Pages 주소](https://lsom5064.github.io/jeoncheogi/) · [공개 저장소](https://github.com/Lsom5064/jeoncheogi) · [기존 공개 웹사이트](https://jeongcheogi-practical-class-2026.knu-hai-5040.chatgpt.site)
 
@@ -8,7 +8,7 @@ GitHub 저장소 이름은 요청한 `jeoncheogi`이며 GitHub Actions가 Pages�
 
 ## 구성
 
-- `dist/index.html` 및 생성된 HTML 파일들: 홈, 공통 메뉴, 날짜별 커리큘럼, 분야별 이론·문제 페이지
+- `dist/index.html` 및 생성된 HTML 파일들: 홈, 공통 메뉴, 당일 상세 이론·풀이를 포함한 날짜별 커리큘럼, 분야별 이론·문제 페이지
 - `dist/styles.css`, `dist/learning.css`: 데스크톱, 모바일, 인쇄 스타일
 - `dist/app.js`: 해설 펼치기, 목차, 인쇄
 - `dist/learning.js`: 답안 저장, 채점, 오답 필터, 제한시간 모의고사, 원본 시험 연결

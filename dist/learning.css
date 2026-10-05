@@ -8,6 +8,15 @@
 .domain .prose h4:first-child{margin-top:8px;border-top:0;padding-top:0}
 .domain table{min-width:470px}
 .domain strong{font-weight:700}
+.daily-lessons{display:grid;gap:10px;margin:0 0 34px}
+.daily-domain{padding:12px 0 22px;border-bottom:1px solid var(--line)}
+.daily-domain>h3{display:flex;align-items:center;gap:9px;margin:0 0 12px;color:var(--green-dark);font-size:1.1rem}
+.daily-domain>h3 .icon{width:20px;height:20px}
+.daily-topic{max-width:1000px;padding:12px 0 8px}
+.daily-topic>h4{margin:0 0 10px;color:#334c3f;font-size:1rem}
+.daily-topic .prose{line-height:1.8}
+.daily-practice{margin:0 0 20px}
+.daily-practice .question{padding:22px 0}
 .question-form{margin-top:24px}
 .question-form>label,.exam-answer-label{display:block;font-size:.89rem;font-weight:650;margin-bottom:8px;color:#415b4b}
 textarea{display:block;width:100%;max-width:100%;min-height:92px;border:1px solid #bfcac2;border-radius:4px;padding:12px 14px;font:inherit;font-size:1rem;line-height:1.6;color:var(--ink);background:var(--white);resize:vertical;overflow-wrap:anywhere}

@@ -48,6 +48,40 @@ const topicCount = domains.reduce((total, group) => total + group.tokens.filter(
 const questionGroups = groups(marked.lexer(questionDoc), 2).flatMap((group) => groups(group.tokens, 3).map((question) => ({ ...question, domain: group.title.replace(/^[A-I]\. /, '') })));
 const answers = groups(marked.lexer(answerDoc), 2).flatMap((group) => groups(group.tokens, 3));
 const domainNames = ['DB', '네트워크/OS', 'SW개발', 'SW설계', '보안/신기술', 'C언어', 'Java', 'Python', 'SQL'];
+const dailyFocus = {
+  '2026-10-05': {'SW개발':[1,2,3,4],SQL:[4,5]},
+  '2026-10-06': {'SW개발':[6],'보안/신기술':[4],SQL:[6]},
+  '2026-10-07': {'SW개발':[5,6],SQL:[6,7]},
+  '2026-10-08': {'SW설계':[1,3,4],C언어:[1,5]},
+  '2026-10-09': {'SW설계':[2,6],C언어:[2,4]},
+  '2026-10-10': {'SW설계':[4,5,6],C언어:[3]},
+  '2026-10-11': {'보안/신기술':[4,5]},
+  '2026-10-12': {'보안/신기술':[2,3],Java:[1]},
+  '2026-10-13': {'보안/신기술':[1,3,6],Java:[2,3,5]},
+  '2026-10-14': {'DB':[1,2,3,4,5,6],Python:[1]},
+  '2026-10-15': {'네트워크/OS':[5,6,7],Python:[2,3,4]},
+  '2026-10-16': {'네트워크/OS':[1,2,3,4,8],SQL:[1,2,3]},
+  '2026-10-17': {'SW개발':[1,2,3,4,5,6],SQL:[4,6]},
+  '2026-10-18': {'SW설계':[1,3,4,5],C언어:[1,3],Java:[1,2],Python:[1,2],SQL:[4]},
+  '2026-10-19': {'보안/신기술':[1,2,3,4,5,6],C언어:[1],Java:[1],Python:[1],SQL:[4]},
+  '2026-10-20': {'DB':[1,2,3,4,5,6],C언어:[1,4],SQL:[1,4]},
+  '2026-10-21': {'네트워크/OS':[1,2,3,4,5,6,7,8],Python:[1,4],SQL:[1,4]},
+  '2026-10-22': {'SW개발':[1,2,3,4,5,6],'SW설계':[1,2,3,4,5,6],Java:[1,2],Python:[2,4]},
+  '2026-10-23': {'보안/신기술':[1,2,3,4,5,6],C언어:[1,3],Java:[1,5],Python:[1,3],SQL:[4]},
+  '2026-10-24': {'DB':[2,3,5],'네트워크/OS':[3,5,7],'SW개발':[2,3],'보안/신기술':[1,2],C언어:[1],Java:[1],Python:[1],SQL:[4]},
+  '2026-10-25': {'DB':[2,5],'네트워크/OS':[1,3,5],'SW개발':[1,2],'SW설계':[1,3],'보안/신기술':[1,2],C언어:[1,3],Java:[1,5],Python:[1,3],SQL:[1,4]}
+};
+const dailyQuestionIds = {
+  '2026-10-05':[8,9,35,24], '2026-10-06':[10,14,57], '2026-10-07':[37,57,59],
+  '2026-10-08':[11,12,13,17,18], '2026-10-09':[40,86,47,48], '2026-10-10':[13,41,49],
+  '2026-10-11':[14,44,45], '2026-10-12':[15,81,19,50], '2026-10-13':[16,43,52,90],
+  '2026-10-14':[1,2,26,21], '2026-10-15':[4,31,32,53,54], '2026-10-16':[6,29,30,23,59],
+  '2026-10-17':[8,9,36,57,58], '2026-10-18':[11,13,38,84,17,19,21,24],
+  '2026-10-19':[14,15,16,43,81,90,48,50,53,58], '2026-10-20':[1,2,3,27,28,82,83],
+  '2026-10-21':[4,5,6,7,29,31,32,85,87,88,89], '2026-10-22':[8,10,11,13,40,41,86],
+  '2026-10-23':[14,15,16,42,43,44,45,46,81,90], '2026-10-24':[2,4,14,17,19,21,24,29],
+  '2026-10-25':[1,8,14,17,19,21,24,29]
+};
 const domainIcons = ['Database', 'Network', 'FlaskConical', 'Blocks', 'ShieldCheck', 'Braces', 'CodeXml', 'Terminal', 'Table2'];
 const ranges = ['1–3', '4–7', '8–10', '11–13', '14–16', '17–18', '19–20', '21–22', '23–24'];
 const firstQuestions = [1, 4, 8, 11, 14, 17, 19, 21, 23];
@@ -157,8 +191,19 @@ for (const [index, domain] of domains.entries()) {
 }
 for (const day of dayEntries) {
   const related = domainNames.map((name, i) => ({name, href:`theory-${slugs[i]}.html`})).filter(({name}) => `${day.theoryText} ${day.codingText}`.toLowerCase().includes(name.toLowerCase()) || (name === 'C언어' && /\bC\b/.test(`${day.theoryText} ${day.codingText}`)) || (name === '네트워크/OS' && /네트워크|\bOS\b|페이지 교체|IP\b|chmod|라우팅/i.test(`${day.theoryText} ${day.codingText}`)) || (name === 'SW개발' && /테스트|인터페이스|형상관리/i.test(day.theoryText)) || (name === 'SW설계' && /패턴|UML|응집도|설계/i.test(day.theoryText)) || (name === '보안/신기술' && /보안|공격|암호|신기술|3A/i.test(day.theoryText)) || (name === 'SQL' && /SQL/i.test(day.codingText)) || (name === 'Python' && /Python/i.test(day.codingText)) || (name === 'Java' && /Java/i.test(day.codingText)));
-  const content = `<section class="section">${header('CURRICULUM', day.date, '오늘의 이론 · 코딩/SQL · 학습 결과')}<div class="phase-map"><div><span>이론</span><b>${escape(day.theoryText)}</b></div><div><span>코딩 · SQL</span><b>${escape(day.codingText)}</b></div><div><span>학습 산출물</span><b>${escape(day.outcome)}</b></div></div><h2>오늘의 학습 순서</h2><ol><li>이론 주제를 읽고 핵심 정의와 구분 기준을 정리합니다.</li><li>코드 또는 SQL은 손으로 추적하고 중간 결과를 기록합니다.</li><li>답안을 가리고 관련 분야 문제를 풀어 채점합니다.</li></ol><h2>관련 분야</h2><div class="source-grid">${related.map(({name,href}) => `<a class="source-link" href="${href}"><span><b>${name}</b><small>이론 보기 · 관련 문제로 이동</small></span>${icon('ArrowRight')}</a>`).join('') || `<a class="source-link" href="practice.html"><span><b>전체 문제 풀이</b></span>${icon('ArrowRight')}</a>`}</div><p><a href="curriculum.html">전체 날짜별 커리큘럼</a></p></section>`;
-  writePage(`day-${day.dateKey}.html`, `${day.date} 학습 계획`, 'curriculum.html', content);
+  const focus = dailyFocus[day.dateKey];
+  if (!focus || !dailyQuestionIds[day.dateKey]) throw new Error(`Missing daily lesson map for ${day.dateKey}`);
+  const lessons = Object.entries(focus).map(([name, numbers]) => {
+    const domain = domains[domainNames.indexOf(name)];
+    const topics = groups(domain.tokens, 3).filter((topic) => numbers.includes(Number(topic.title.match(/^\d+/)?.[0])));
+    if (topics.length !== numbers.length) throw new Error(`Incomplete ${name} lesson mapping for ${day.dateKey}`);
+    return `<section class="daily-domain"><h3>${icon(domainIcons[domainNames.indexOf(name)])}${escape(name)}</h3>${topics.map((topic) => `<article class="daily-topic"><h4>${escape(topic.title.replace(/^\d+\.\s*/,''))}</h4><div class="prose">${html(topic.tokens)}</div></article>`).join('')}</section>`;
+  }).join('');
+  const dailyQuestions = dailyQuestionIds[day.dateKey].map((id) => bank.find((question) => question.id === id)).filter(Boolean);
+  if (dailyQuestions.length !== dailyQuestionIds[day.dateKey].length) throw new Error(`Missing daily practice question for ${day.dateKey}`);
+  const extraUi = day.dateKey === '2026-10-11' ? `<article class="daily-topic"><h4>UI 설계 원칙과 유형</h4><div class="prose"><p>사용자 중심성, 일관성, 단순성, 가시성, 피드백, 오류 예방을 기준으로 화면을 설계합니다. 입력 형식과 오류 원인을 명확히 알리고, 같은 동작은 같은 방식으로 제공하며, 사용자가 취소·되돌리기 할 수 있게 합니다.</p><p>GUI는 그래픽 요소를 직접 조작하고, 메뉴 방식은 목록에서 명령을 선택합니다. 음성·대화형 UI 등 입력 환경에 맞는 유형을 선택하며 접근성과 학습 용이성도 함께 점검합니다.</p></div></article>` : '';
+  const content = `<section class="section">${header('CURRICULUM', day.date, '오늘 배울 이론 · 코드/SQL · 직접 풀이')}<div class="phase-map"><div><span>이론 범위</span><b>${escape(day.theoryText)}</b></div><div><span>코딩 · SQL 범위</span><b>${escape(day.codingText)}</b></div><div><span>오늘의 산출물</span><b>${escape(day.outcome)}</b></div></div><h2>오늘 배울 내용</h2><div class="daily-lessons">${lessons}${extraUi}</div><h2>오늘의 직접 풀이</h2><p class="section-note">답을 직접 입력하고 채점하세요. 정답과 해설은 원할 때 펼쳐볼 수 있습니다.</p><section id="practice" class="daily-practice"><div id="practice-summary" class="practice-summary" role="status"></div><div class="questions">${dailyQuestions.map(practiceQuestion).join('')}</div></section><h2>오늘의 학습 순서</h2><ol><li>위 이론을 읽고 정의·구분 기준·예외를 노트에 정리합니다.</li><li>코드와 SQL은 행 또는 변수의 중간 상태를 표로 추적합니다.</li><li>오늘 문제를 먼저 풀고 채점한 뒤, 해설과 오늘의 산출물을 확인합니다.</li></ol><h2>다음 학습 연결</h2><div class="source-grid">${related.map(({name,href}) => `<a class="source-link" href="${href}"><span><b>${name} 상세 이론</b><small>전체 분야 개념과 추가 연습문제</small></span>${icon('ArrowRight')}</a>`).join('') || `<a class="source-link" href="mock.html"><span><b>모의고사</b><small>누적 학습 점검</small></span>${icon('ArrowRight')}</a>`}</div><p><a href="curriculum.html">전체 날짜별 커리큘럼</a></p></section>`;
+  writePage(`day-${day.dateKey}.html`, `${day.date} 학습 계획`, 'curriculum.html', content, ['practice']);
 }
 const json = (value) => JSON.stringify(value).replace(/</g,'\\u003c');
 writeFileSync(path.join(root, 'dist', 'question-bank.js'), `window.LESSON_BANK=${json(bank)};\nwindow.LESSON_EXAMS=${json(examSets)};\nwindow.LESSON_SOURCES=${json(sourceExams)};\nwindow.LESSON_DOMAINS=${json(domainNames)};\nwindow.LESSON_ICONS=${json({check:icon('CheckCheck'),chevron:icon('ChevronDown'),yes:icon('Check'),no:icon('X')})};\n`);

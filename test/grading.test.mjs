@@ -39,6 +39,17 @@ assert.equal(builtBank.length,90);
 assert.equal(new Set(builtBank.map((question)=>question.id)).size,90);
 const generatedPages=readdirSync(new URL('../dist/',import.meta.url)).filter((file)=>file.endsWith('.html'));
 assert.equal(generatedPages.filter((file)=>/^day-2026-10-\d{2}\.html$/.test(file)).length,21);
+for (let day=5;day<=25;day++) {
+  const date=`2026-10-${String(day).padStart(2,'0')}`;
+  const page=readFileSync(new URL(`../dist/day-${date}.html`,import.meta.url),'utf8');
+  assert.match(page,/오늘 배울 내용/);
+  assert.match(page,/오늘의 직접 풀이/);
+  assert.match(page,/data-question-id=/,`Daily practice questions ${date}`);
+  assert.match(page,/<article class="daily-topic">/,`Daily theory topics ${date}`);
+}
+const firstDay=readFileSync(new URL('../dist/day-2026-10-05.html',import.meta.url),'utf8');
+assert.match(firstDay,/커버리지와 MC\/DC/);
+assert.match(firstDay,/JOIN과 결과 행 수/);
 for (const slug of ['db','sql','c','java','python','network-os','sw-dev','sw-design','security-newtech']) {
   assert.ok(generatedPages.includes(`theory-${slug}.html`),`Theory route ${slug}`);
   assert.ok(generatedPages.includes(`practice-${slug}.html`),`Practice route ${slug}`);
