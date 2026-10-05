@@ -35,14 +35,21 @@ for (const question of additionalQuestions) assert.equal(grade(question.expected
 const context={window:{}};
 runInNewContext(readFileSync(new URL('../dist/question-bank.js',import.meta.url),'utf8'),context);
 const builtBank=context.window.LESSON_BANK;
-assert.equal(builtBank.length,60);
-assert.equal(new Set(builtBank.map((question)=>question.id)).size,60);
+assert.equal(builtBank.length,80);
+assert.equal(new Set(builtBank.map((question)=>question.id)).size,80);
 assert.match(builtBank.find((question)=>question.id===2).bodyHtml,/수강\(학번/);
 assert.doesNotMatch(builtBank.find((question)=>question.id===2).bodyHtml,/1번 릴레이션/);
 for (const question of builtBank) {
   assert.ok(question.bodyHtml&&question.answerHtml,`Question content ${question.id}`);
   assert.equal(grade(question.expected,question.grading).status,'correct',`Built expected answer ${question.id}`);
 }
+const pdfSet=pickExam(builtBank,'pdf-variant-1');
+assert.deepEqual(Array.from(pdfSet,(question)=>question.id),Array.from({length:20},(_,i)=>61+i));
+assert.equal(context.window.LESSON_EXAMS[0].ids.length,20);
+assert.equal(summarize(pdfSet,Object.fromEntries(pdfSet.map((question)=>[question.id,question.expected]))).score,100);
+assert.equal(summarize(pdfSet,{}).unanswered,20);
+assert.equal(grade('4 32',pdfSet.find((question)=>question.id===71).grading).status,'incorrect');
+assert.equal(grade('4 3 2',pdfSet.find((question)=>question.id===78).grading).status,'correct');
 assert.equal(grade('32',additionalQuestions.find((question)=>question.id===53).grading).status,'incorrect');
 assert.equal(grade('3    2',additionalQuestions.find((question)=>question.id===53).grading).status,'correct');
 assert.equal(grade('A B',additionalQuestions.find((question)=>question.id===52).grading).status,'incorrect');

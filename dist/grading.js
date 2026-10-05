@@ -55,6 +55,11 @@
   }
 
   function pickExam(bank, mode, random = Math.random) {
+    if (mode === 'pdf-variant-1') {
+      const questions = bank.filter((question) => question.examSet === mode).sort((a,b)=>a.id-b.id);
+      if (questions.length !== 20) throw new Error('PDF 유형 응용 문항 구성을 확인해 주세요.');
+      return questions;
+    }
     const shuffle = (values) => {
       const copy = [...values];
       for (let index = copy.length - 1; index > 0; index--) {

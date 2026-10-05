@@ -3,6 +3,7 @@ import { createRequire } from 'node:module';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { baseGrading, additionalQuestions, sourceExams } from '../content/questions.mjs';
+import { pdfMockQuestions, examSets } from '../content/pdf-mock.mjs';
 
 const root = path.resolve(fileURLToPath(new URL('..', import.meta.url)));
 const require = createRequire(import.meta.url);
@@ -67,7 +68,7 @@ const bank = questionGroups.map((question) => {
   const cleanTokens = question.tokens.filter((token) => !(token.type === 'paragraph' && token.text.trim() === '답:'));
   const bodyHtml = number === 2 ? html(marked.lexer('수강(학번, 과목코드, 과목명, 교수명, 성적)의 후보키는 (학번, 과목코드)이며, (학번, 과목코드) → 성적, 과목코드 → 과목명, 교수명이라는 함수 종속이 있다.\n\n위 릴레이션이 제2정규형을 만족하지 못하는 이유를 쓰시오.')) : html(cleanTokens);
   return {id:number,title,domain:question.domain,bodyHtml,answerHtml:html(answer.tokens),expected:baseExpected[number-1],grading:baseGrading[number]};
-}).concat(additionalQuestions.map((question) => ({...question,bodyHtml:html(marked.lexer(question.body)),answerHtml:html(marked.lexer(question.answer))})));
+}).concat([...additionalQuestions,...pdfMockQuestions].map((question) => ({...question,bodyHtml:html(marked.lexer(question.body)),answerHtml:html(marked.lexer(question.answer))})));
 const practice = bank.map((question) => `<article class="question" id="question-${question.id}" data-question-id="${question.id}" data-domain="${question.domain}"><div class="question-heading"><span class="question-number">${String(question.id).padStart(2, '0')}</span><div><span class="subject-label">${escape(question.domain)}</span><h3>${escape(question.title)}</h3></div><a class="theory-link" href="#domain-${domainNames.indexOf(question.domain)}">이론</a></div><div class="prose">${question.bodyHtml}</div><form class="question-form" data-id="${question.id}"><label for="answer-${question.id}">내 답안</label><textarea id="answer-${question.id}" name="answer" rows="2" autocomplete="off" spellcheck="false" aria-describedby="feedback-${question.id}"></textarea><div class="answer-actions"><button type="submit" class="action-button">${icon('CheckCheck')}채점</button><span class="grade-feedback" id="feedback-${question.id}" role="status"></span></div><div class="self-grade" hidden><button type="button" class="text-button" data-self-grade="correct">${icon('Check')}정답으로 표시</button><button type="button" class="text-button" data-self-grade="incorrect">${icon('X')}오답으로 표시</button></div></form><details class="answer"><summary>${icon('CheckCheck')}<span>정답과 해설</span>${icon('ChevronDown')}</summary><div class="answer-content prose">${question.answerHtml}</div></details></article>`).join('');
 
 const diagnosisTokens = section(6).tokens;
@@ -137,9 +138,9 @@ const page = `<!doctype html>
 </body>
 </html>`;
 mkdirSync(path.join(root, 'dist', 'materials'), { recursive: true });
-writeFileSync(path.join(root, 'dist', 'index.html'), page);
+writeFileSync(path.join(root, 'dist', 'index.html'), page.replace('<option value="mixed">종합 20문항</option>','<option value="mixed">종합 20문항</option>'+examSets.map((exam)=>`<option value="${exam.id}">${escape(exam.title)} · 20문항</option>`).join('')).replace('<div id="exam-setup"','<p id="exam-source-note" class="section-note mock-note" hidden></p><div id="exam-setup"').replace('정보처리기사 실기: 9개 분야 상세 이론, 60문항 직접 입력과 채점','정보처리기사 실기: 9개 분야 상세 이론, 80문항 직접 입력과 채점').replace('상세 이론 · 60문항 답안 입력과 채점','상세 이론 · 80문항 답안 입력과 채점'));
 const json = (value) => JSON.stringify(value).replace(/</g,'\\u003c');
-writeFileSync(path.join(root, 'dist', 'question-bank.js'), `window.LESSON_BANK=${json(bank)};\nwindow.LESSON_SOURCES=${json(sourceExams)};\nwindow.LESSON_DOMAINS=${json(domainNames)};\nwindow.LESSON_ICONS=${json({check:icon('CheckCheck'),chevron:icon('ChevronDown'),yes:icon('Check'),no:icon('X')})};\n`);
+writeFileSync(path.join(root, 'dist', 'question-bank.js'), `window.LESSON_BANK=${json(bank)};\nwindow.LESSON_EXAMS=${json(examSets)};\nwindow.LESSON_SOURCES=${json(sourceExams)};\nwindow.LESSON_DOMAINS=${json(domainNames)};\nwindow.LESSON_ICONS=${json({check:icon('CheckCheck'),chevron:icon('ChevronDown'),yes:icon('Check'),no:icon('X')})};\n`);
 copyFileSync(path.join(root, 'materials', 'detailed_theory.md'),path.join(root,'dist','materials','detailed_theory.md'));
 for (let i = 0; i < sourceNames.length; i++) copyFileSync(path.join(root, 'materials', `jeongcheogi_2026-10-25_${sourceNames[i]}.md`), path.join(root, 'dist', 'materials', `jeongcheogi_2026-10-25_${sourceNames[i]}.md`));
 console.log(`Built ${domains.length} domains, ${topicCount} topics, ${bank.length} graded questions and ${sourceExams.length} original exam connections.`);

@@ -51,6 +51,7 @@ input[type=checkbox]{width:17px;height:17px;accent-color:var(--green);margin:0}
 .exam-setup .action-button{min-width:140px}
 .exam-status{display:flex;align-items:center;gap:20px;flex-wrap:wrap;padding:16px 20px;background:var(--surface);border:1px solid var(--line);position:sticky;top:12px;z-index:2;border-radius:4px;margin-bottom:20px}
 .exam-status>div:first-child{display:flex;flex-direction:column;margin-right:auto}
+.exam-status.complete{position:static}
 #exam-title{font-size:1rem}
 #exam-progress{font-size:.83rem;color:var(--muted);margin-top:3px}
 .exam-clock{display:flex;align-items:center;gap:8px;color:var(--green-dark);font-weight:700;min-width:100px}
@@ -86,7 +87,7 @@ input[type=checkbox]{width:17px;height:17px;accent-color:var(--green);margin:0}
   .practice-summary{gap:10px 18px;font-size:.86rem;padding:16px 0}.grading-note{font-size:.84rem}
   .answer-actions{gap:12px}.answer-actions .grade-feedback{font-size:.87rem}
   .mode-tabs{gap:17px}.mode-tabs button{font-size:.86rem;gap:6px}.mode-tabs .icon{width:17px;height:17px}
-  .exam-setup{gap:15px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.exam-setup label{min-width:0}.exam-setup .action-button{grid-column:1/-1}
+  .exam-setup{gap:15px;display:grid;grid-template-columns:minmax(0,1fr)}.exam-setup label{min-width:0}.exam-setup .action-button{grid-column:1/-1}
   .exam-status{padding:13px;gap:13px;top:8px;display:grid;grid-template-columns:minmax(0,1fr) auto}.exam-status .action-button{grid-column:1/-1;min-height:38px}
   #exam-title{font-size:.88rem}.exam-clock{min-width:0;font-size:.9rem;gap:5px}#exam-time{font-size:1rem}
   .exam-question{scroll-margin-top:175px}.exam-result-heading{gap:16px;flex-wrap:wrap}.exam-result-heading>strong{font-size:1.7rem}.exam-result-heading p{font-size:.86rem}

@@ -128,6 +128,11 @@
   revealLinkedQuestion();
 
   let timer=null;
+  function renderExamSource() {
+    const selected=window.LESSON_EXAMS.find((item)=>item.id===(exam?.mode??$('#exam-mode').value));
+    $('#exam-source-note').hidden=!selected;
+    $('#exam-source-note').innerHTML=selected?`<a href="${escapeHtml(selected.source.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(selected.source.title)}</a> · ${escapeHtml(selected.source.note)}`:'';
+  }
   function examQuestions() {return exam?exam.ids.map((id)=>byId.get(id)):[];}
   function updateExamProgress() {
     if (!exam) return;
@@ -157,14 +162,17 @@
   }
   function renderExam() {
     if (timer) {clearInterval(timer);timer=null;}
+    renderExamSource();
     $('#exam-setup').hidden=!!exam;
     $('#exam-status').hidden=!exam;
+    $('#exam-status').classList.toggle('complete',exam?.submitted===true);
     $('#exam-complete-actions').hidden=!exam?.submitted;
     $('#exam-result').hidden=!exam?.submitted;
     $('#exam-questions').innerHTML='';
     $('#exam-navigation').innerHTML='';
     if (!exam) return;
-    $('#exam-title').textContent=`${exam.mode==='retry'?'오답 재시험':exam.mode==='theory'?'이론 모의고사':exam.mode==='coding'?'코딩·SQL 모의고사':'종합 모의고사'} · ${exam.ids.length}문항`;
+    const setTitle=window.LESSON_EXAMS.find((item)=>item.id===exam.mode)?.title;
+    $('#exam-title').textContent=`${setTitle??(exam.mode==='retry'?'오답 재시험':exam.mode==='theory'?'이론 모의고사':exam.mode==='coding'?'코딩·SQL 모의고사':'종합 모의고사')} · ${exam.ids.length}문항`;
     $('#exam-submit').hidden=exam.submitted;
     $('#exam-time').textContent=exam.submitted?'제출 완료':'';
     $('#exam-time').classList.remove('running-low');
@@ -217,6 +225,7 @@
     const mode=$('#exam-mode').value;
     startExam(grading.pickExam(bank,mode).map((question)=>question.id),mode,Number($('#exam-minutes').value));
   });
+  $('#exam-mode').addEventListener('change',renderExamSource);
   $('#exam-submit').addEventListener('click',()=>finishExam());
   $('#exam-new').addEventListener('click',()=>{exam=null;saveStorage(storageKeys.exam,null);renderExam();$('#exam-mode').focus();});
   $('#exam-retry').addEventListener('click',()=>{
