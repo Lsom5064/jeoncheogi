@@ -8,10 +8,15 @@ import { pdfMockQuestions, examSets } from '../content/pdf-mock.mjs';
 const root = path.resolve(fileURLToPath(new URL('..', import.meta.url)));
 const require = createRequire(import.meta.url);
 const dependencyPaths = process.env.CODEX_DEPENDENCY_PATH ? [process.env.CODEX_DEPENDENCY_PATH] : [];
-const { marked } = await import(pathToFileURL(require.resolve('marked', { paths: [root, ...dependencyPaths] })).href);
+const markedModule = await import(pathToFileURL(require.resolve('marked', { paths: [root, ...dependencyPaths] })).href);
+const marked = markedModule.marked ?? markedModule.default?.marked;
 const { icons } = require(require.resolve('lucide', { paths: [root, ...dependencyPaths] }));
 const escape = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
-const icon = (name) => `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[name].map(([tag, attrs]) => `<${tag} ${Object.entries(attrs).map(([key, value]) => `${key}="${escape(value)}"`).join(' ')}></${tag}>`).join('')}</svg>`;
+const icon = (name) => {
+  const node = icons[name];
+  const children = node[0] === 'svg' ? node[2] : node;
+  return `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${children.map(([tag, attrs]) => `<${tag} ${Object.entries(attrs).map(([key, value]) => `${key}="${escape(value)}"`).join(' ')}></${tag}>`).join('')}</svg>`;
+};
 
 function groups(tokens, depth) {
   const result = [];
