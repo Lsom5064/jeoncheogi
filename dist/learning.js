@@ -27,21 +27,21 @@
     for (const question of bank) if (['correct','incorrect'].includes(values?.[question.id])) result[question.id]=values[question.id];
     return result;
   }
-  if ($('#practice')) {
-  const practiceBank=bank.filter((question)=>$(`#question-${question.id}`));
-  const savedPractice=readStorage(storageKeys.practice);
-  let practice={answers:safeAnswers(savedPractice?.answers),graded:Array.isArray(savedPractice?.graded)?savedPractice.graded.filter((id)=>byId.has(id)):[],overrides:safeOverrides(savedPractice?.overrides)};
   let exam=null;
   const savedExam=readStorage(storageKeys.exam);
   if (savedExam&&Array.isArray(savedExam.ids)&&savedExam.ids.length>0&&savedExam.ids.length<=60&&new Set(savedExam.ids).size===savedExam.ids.length&&savedExam.ids.every((id)=>byId.has(id))&&Number.isFinite(savedExam.startedAt)&&Number.isFinite(savedExam.deadline)&&savedExam.deadline>savedExam.startedAt&&savedExam.deadline-savedExam.startedAt<=24*60*60*1000) {
     exam={...savedExam,answers:safeAnswers(savedExam.answers),overrides:safeOverrides(savedExam.overrides),submitted:savedExam.submitted===true};
   }
-
   function resultFor(question,state) {
     const result=grading.grade(state.answers[question.id],question.grading);
     if (result.status==='review'&&['correct','incorrect'].includes(state.overrides[question.id])) return {...result,status:state.overrides[question.id],feedback:`${statusLabels[state.overrides[question.id]]} · 직접 확인`};
     return result;
   }
+  if ($$('.question-form').length) {
+  const practiceBank=bank.filter((question)=>$(`#question-${question.id}`));
+  const savedPractice=readStorage(storageKeys.practice);
+  let practice={answers:safeAnswers(savedPractice?.answers),graded:Array.isArray(savedPractice?.graded)?savedPractice.graded.filter((id)=>byId.has(id)):[],overrides:safeOverrides(savedPractice?.overrides)};
+
   function renderPracticeFeedback(question) {
     const form=$(`.question-form[data-id="${question.id}"]`);
     const feedback=$(`#feedback-${question.id}`);
