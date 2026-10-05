@@ -1,0 +1,89 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="정보처리기사 실기 SQL 이론 · 분야별 이론과 직접 채점 문제 90문항"><meta name="theme-color" content="#127761"><title>SQL 이론 | 정보처리기사 실기 수업노트</title><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23127761'/%3E%3Cpath d='M8 8h7v17H8zm9 0h7v17h-7z' fill='white'/%3E%3C/svg%3E"><link rel="stylesheet" href="./styles.css"><link rel="stylesheet" href="./learning.css"><script src="./app.js" defer></script></head><body><a class="skip-link" href="#main">본문으로 이동</a><aside class="sidebar"><a class="brand" href="index.html"><span class="brand-mark"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7v14"></path><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"></path></svg></span><span>실기 수업노트<small>정보처리기사 · 2026</small></span></a><span class="nav-label">수업자료</span><nav aria-label="학습 목차"><a href="curriculum.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path><path d="M8 14h.01"></path><path d="M12 14h.01"></path><path d="M16 14h.01"></path><path d="M8 18h.01"></path><path d="M12 18h.01"></path><path d="M16 18h.01"></path></svg><span>날짜별 커리큘럼</span></a><a href="schedule.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16.5 12"></polyline></svg><span>25일 오전 수업</span></a><a href="subjects.html" aria-current="page" class="active"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7v14"></path><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"></path></svg><span>분야별 상세 이론</span></a><a href="diagnosis.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><path d="m9 14 2 2 4-4"></path></svg><span>시작 전 진단</span></a><a href="practice.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z"></path><path d="m15 5 3 3"></path></svg><span>답안 입력과 채점</span></a><a href="mock.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="10" x2="14" y1="2" y2="2"></line><line x1="12" x2="15" y1="14" y2="11"></line><circle cx="12" cy="14" r="8"></circle></svg><span>모의고사</span></a><a href="checklist.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 17 2 2 4-4"></path><path d="m3 7 2 2 4-4"></path><path d="M13 6h8"></path><path d="M13 12h8"></path><path d="M13 18h8"></path></svg><span>최종 점검</span></a><a href="sources.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="8" height="18" x="3" y="3" rx="1"></rect><path d="M7 3v18"></path><path d="M20.4 18.9c.2.5-.1 1.1-.6 1.3l-1.9.7c-.5.2-1.1-.1-1.3-.6L11.1 5.1c-.2-.5.1-1.1.6-1.3l1.9-.7c.5-.2 1.1.1 1.3.6Z"></path></svg><span>참고 자료</span></a></nav><div class="sidebar-foot"><span>수업일</span><b>2026. 10. 25. 일요일</b><p>오전 압축 수업</p></div></aside><main id="main"><header class="page-header"><div class="page-top"><span class="eyebrow">2026 실기 대비 수업자료</span><div class="header-actions"><button class="icon-button" id="print" type="button" title="현재 페이지 인쇄" aria-label="현재 페이지 인쇄"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"></path><rect x="6" y="14" width="12" height="8" rx="1"></rect></svg></button></div></div><div class="title-row"><div><h1>SQL 이론</h1><p class="lead">정보처리기사 · 10월 25일 오전 수업</p></div><a class="date-label" href="index.html">10.25 <span>SUN</span></a></div></header><section class="section"><article class="domain" id="domain-8"><div class="domain-heading"><div class="domain-title"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"></path></svg><span class="section-number">09</span><h3>SQL</h3></div><a class="theory-link" href="practice-sql.html">문제 23–24</a></div><div class="prose"><h4>1. SELECT의 논리 처리 순서</h4>
+<p>FROM/JOIN → WHERE → GROUP BY → HAVING → SELECT → DISTINCT → ORDER BY 순서로 이해한다. 이는 결과를 추론하는 논리 순서이며 실제 DBMS의 물리 실행 계획과 항상 같은 것은 아니다.</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="학습 자료 표"><table>
+<thead>
+<tr>
+<th>단계</th>
+<th>결정할 것</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FROM/JOIN</td>
+<td>어떤 행을 대상으로 할 것인가</td>
+</tr>
+<tr>
+<td>WHERE</td>
+<td>개별 행 중 무엇을 남길 것인가</td>
+</tr>
+<tr>
+<td>GROUP BY</td>
+<td>어떤 값으로 행을 묶을 것인가</td>
+</tr>
+<tr>
+<td>HAVING</td>
+<td>어떤 그룹을 남길 것인가</td>
+</tr>
+<tr>
+<td>SELECT</td>
+<td>어떤 열과 식을 출력할 것인가</td>
+</tr>
+<tr>
+<td>ORDER BY</td>
+<td>결과를 어떤 순서로 보여줄 것인가</td>
+</tr>
+</tbody></table></div>
+<h4>2. 집계와 NULL</h4>
+<p><code>COUNT(*)</code>는 행 수, <code>COUNT(column)</code>은 해당 값이 NULL이 아닌 행 수다. SUM과 AVG 등 일반적인 집계는 NULL을 제외한다. NULL 비교는 <code>= NULL</code>이 아니라 <code>IS NULL</code>을 사용한다. SQL 조건에는 참·거짓뿐 아니라 UNKNOWN이 있으며, WHERE는 참인 행만 남긴다.</p>
+<p><strong>예제</strong>: 점수 80, NULL, 100 세 행이면 <code>COUNT(*)=3</code>, <code>COUNT(점수)=2</code>, <code>AVG(점수)=90</code>이다. NULL을 0으로 대체해서 계산하라는 조건이 없으면 임의로 0을 넣지 않는다.</p>
+<h4>3. GROUP BY와 HAVING</h4>
+<pre><code class="language-sql">SELECT department, SUM(amount) AS total
+FROM sales
+WHERE amount &gt;= 20
+GROUP BY department
+HAVING SUM(amount) &gt;= 70
+ORDER BY department;
+</code></pre>
+<p>먼저 20 미만의 개별 행을 제거하고, 부서별로 합을 계산한 뒤 합이 70 이상인 그룹만 출력한다. SELECT의 비집계 열은 일반적으로 GROUP BY에 대응해야 하며 DBMS의 추가 허용 규칙은 별도로 확인한다.</p>
+<h4>4. JOIN과 결과 행 수</h4>
+<p>INNER JOIN은 일치한 행만, LEFT JOIN은 왼쪽 행을 모두 남기며 매칭이 없는 오른쪽 열은 NULL이다. 하나의 왼쪽 행이 오른쪽 두 행과 일치하면 결과가 두 행으로 늘어난다. 관계가 일대일인지 일대다인지 먼저 확인한다.</p>
+<p><strong>예제</strong>: 학생 1,2,3 중 신청 테이블에 1이 두 번, 3이 한 번 있으면 INNER JOIN은 3행, LEFT JOIN은 매칭이 없는 학생 2를 포함하여 4행이다. LEFT JOIN 후 WHERE에서 오른쪽 열의 조건을 요구하면 매칭이 없는 행이 제거될 수 있다. ON의 조건과 WHERE의 조건 위치를 구별한다.</p>
+<h4>5. 서브쿼리와 집합 연산</h4>
+<p>IN은 집합 내 포함 여부, EXISTS는 서브쿼리 결과의 존재 여부를 검사한다. 상관 서브쿼리는 바깥 행의 값을 참조한다. NOT IN의 대상에 NULL이 있으면 UNKNOWN 때문에 예상과 다른 결과가 나올 수 있다.</p>
+<p>UNION은 중복을 제거하고 UNION ALL은 중복을 유지한다. 집합 연산을 연결하는 SELECT들의 열 수와 자료형 호환성을 확인한다. ORDER BY 없이 결과 순서가 보장된다고 가정하지 않는다.</p>
+<h4>6. DDL, DML, DCL, TCL</h4>
+<div class="table-scroll" tabindex="0" role="region" aria-label="학습 자료 표"><table>
+<thead>
+<tr>
+<th>분류</th>
+<th>명령</th>
+<th>주요 목적</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DDL</td>
+<td>CREATE, ALTER, DROP</td>
+<td>구조 정의·변경</td>
+</tr>
+<tr>
+<td>DML</td>
+<td>INSERT, UPDATE, DELETE</td>
+<td>데이터 변경</td>
+</tr>
+<tr>
+<td>DCL</td>
+<td>GRANT, REVOKE</td>
+<td>권한 부여·회수</td>
+</tr>
+<tr>
+<td>TCL</td>
+<td>COMMIT, ROLLBACK, SAVEPOINT</td>
+<td>트랜잭션 제어</td>
+</tr>
+</tbody></table></div>
+<p>SELECT를 DML에 포함하는 분류와 DQL로 구분하는 분류가 있으므로 문제의 체계를 따른다. DELETE는 행 삭제, DROP은 객체 제거, TRUNCATE는 테이블 전체 행 제거를 위한 별도 명령이다. TRUNCATE와 DDL의 커밋·롤백 동작은 DBMS에 따라 다르므로 보편적인 단정은 피한다.</p>
+<h4>7. 제약조건과 뷰</h4>
+<p>PRIMARY KEY는 유일성과 NULL 불가, UNIQUE는 유일성 제약, NOT NULL은 NULL 불가, CHECK는 값의 조건, FOREIGN KEY는 참조 관계를 표현한다. UNIQUE에서 NULL을 다루는 세부 규칙은 DBMS별로 확인한다. View는 질의를 기반으로 한 논리적인 테이블 표현이며 모든 뷰가 자유롭게 수정 가능한 것은 아니다.</p>
+<h4>8. 윈도 함수와 순위</h4>
+<p><code>ROW_NUMBER()</code>는 행마다 번호, <code>RANK()</code>는 동점 다음 순위를 건너뛰는 순위, <code>DENSE_RANK()</code>는 동점 다음 순위를 건너뛰지 않는 순위다. 윈도 함수의 PARTITION BY는 집계 단위를 나누되 GROUP BY처럼 결과 행을 하나로 합치지 않는다.</p>
+<p><strong>실수 점검</strong>: 결과 행 수, NULL, 그룹의 개수, WHERE/HAVING의 시점, 정렬 기준을 차례로 점검한다. 평균 결과의 자료형이나 소수 표현은 문제에서 지정한 DBMS·출력 조건을 따른다.</p>
+</div><ol class="sql-flow" aria-label="SQL 논리 처리 순서"><li>FROM / JOIN</li><li>WHERE</li><li>GROUP BY</li><li>HAVING</li><li>SELECT</li><li>ORDER BY</li></ol></article><a class="action-button primary" href="practice-sql.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z"></path><path d="m15 5 3 3"></path></svg>SQL 문제 풀기</a></section><footer class="page-footer"><span>정보처리기사 실기 · 2026.10.25 오전 수업자료</span><a href="index.html">처음으로</a></footer></main></body></html>

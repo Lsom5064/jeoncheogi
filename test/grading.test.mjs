@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
+import {readFileSync,readdirSync} from 'node:fs';
 import {runInNewContext} from 'node:vm';
 import '../dist/grading.js';
 import {baseGrading,additionalQuestions} from '../content/questions.mjs';
@@ -35,8 +35,15 @@ for (const question of additionalQuestions) assert.equal(grade(question.expected
 const context={window:{}};
 runInNewContext(readFileSync(new URL('../dist/question-bank.js',import.meta.url),'utf8'),context);
 const builtBank=context.window.LESSON_BANK;
-assert.equal(builtBank.length,80);
-assert.equal(new Set(builtBank.map((question)=>question.id)).size,80);
+assert.equal(builtBank.length,90);
+assert.equal(new Set(builtBank.map((question)=>question.id)).size,90);
+const generatedPages=readdirSync(new URL('../dist/',import.meta.url)).filter((file)=>file.endsWith('.html'));
+assert.equal(generatedPages.filter((file)=>/^day-2026-10-\d{2}\.html$/.test(file)).length,21);
+for (const slug of ['db','sql','c','java','python','network-os','sw-dev','sw-design','security-newtech']) {
+  assert.ok(generatedPages.includes(`theory-${slug}.html`),`Theory route ${slug}`);
+  assert.ok(generatedPages.includes(`practice-${slug}.html`),`Practice route ${slug}`);
+}
+assert.doesNotMatch(readFileSync(new URL('../dist/index.html',import.meta.url),'utf8'),/정처기 감자 참고/);
 assert.match(builtBank.find((question)=>question.id===2).bodyHtml,/수강\(학번/);
 assert.doesNotMatch(builtBank.find((question)=>question.id===2).bodyHtml,/1번 릴레이션/);
 for (const question of builtBank) {

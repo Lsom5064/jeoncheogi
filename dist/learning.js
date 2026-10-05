@@ -27,6 +27,8 @@
     for (const question of bank) if (['correct','incorrect'].includes(values?.[question.id])) result[question.id]=values[question.id];
     return result;
   }
+  if ($('#practice')) {
+  const practiceBank=bank.filter((question)=>$(`#question-${question.id}`));
   const savedPractice=readStorage(storageKeys.practice);
   let practice={answers:safeAnswers(savedPractice?.answers),graded:Array.isArray(savedPractice?.graded)?savedPractice.graded.filter((id)=>byId.has(id)):[],overrides:safeOverrides(savedPractice?.overrides)};
   let exam=null;
@@ -50,10 +52,16 @@
     form.closest('.question').dataset.status=result?.status??'ungraded';
   }
   function applyPracticeFilter() {
-    const domain=$('#practice-domain').value;
-    const wrongOnly=$('#practice-wrong').checked;
+    const domainFilter=$('#practice-domain');
+    const wrongFilter=$('#practice-wrong');
+    if (!domainFilter||!wrongFilter) {
+      for (const question of practiceBank) $(`#question-${question.id}`).hidden=false;
+      return;
+    }
+    const domain=domainFilter.value;
+    const wrongOnly=wrongFilter.checked;
     let visible=0;
-    for (const question of bank) {
+    for (const question of practiceBank) {
       const article=$(`#question-${question.id}`);
       const matches=(domain==='all'||domain===question.domain)&&(!wrongOnly||!practice.graded.includes(question.id)||resultFor(question,practice).status!=='correct');
       article.hidden=!matches;
@@ -63,10 +71,10 @@
     $('#practice-empty').hidden=visible!==0;
   }
   function renderPracticeSummary() {
-    const subset=bank.filter((question)=>practice.graded.includes(question.id));
+    const subset=practiceBank.filter((question)=>practice.graded.includes(question.id));
     const summary=grading.summarize(subset,practice.answers,practice.overrides);
-    const answered=bank.filter((question)=>practice.answers[question.id]?.trim()).length;
-    $('#practice-summary').innerHTML=`<span>입력 <b>${answered}/${bank.length}</b></span><span>채점 <b>${subset.length}</b></span><span class="correct">정답 <b>${summary.correct}</b></span><span class="incorrect">오답 <b>${summary.incorrect}</b></span><span>미응답 <b>${summary.unanswered}</b></span><span class="review">검토 <b>${summary.review}</b></span>`;
+    const answered=practiceBank.filter((question)=>practice.answers[question.id]?.trim()).length;
+    $('#practice-summary').innerHTML=`<span>입력 <b>${answered}/${practiceBank.length}</b></span><span>채점 <b>${subset.length}</b></span><span class="correct">정답 <b>${summary.correct}</b></span><span class="incorrect">오답 <b>${summary.incorrect}</b></span><span>미응답 <b>${summary.unanswered}</b></span><span class="review">검토 <b>${summary.review}</b></span>`;
     applyPracticeFilter();
   }
   function gradePractice(id) {
@@ -97,18 +105,18 @@
     });
     renderPracticeFeedback(byId.get(id));
   }
-  $('#grade-all').addEventListener('click',()=>{
-    practice.graded=bank.map((question)=>question.id);
-    for (const question of bank) renderPracticeFeedback(question);
+  $('#grade-all')?.addEventListener('click',()=>{
+    practice.graded=practiceBank.map((question)=>question.id);
+    for (const question of practiceBank) renderPracticeFeedback(question);
     renderPracticeSummary();
     saveStorage(storageKeys.practice,practice);
   });
-  $('#practice-domain').addEventListener('change',applyPracticeFilter);
-  $('#practice-wrong').addEventListener('change',applyPracticeFilter);
-  $('#practice-reset').addEventListener('click',()=>{
+  $('#practice-domain')?.addEventListener('change',applyPracticeFilter);
+  $('#practice-wrong')?.addEventListener('change',applyPracticeFilter);
+  $('#practice-reset')?.addEventListener('click',()=>{
     if (!window.confirm('연습문제의 답안과 채점 기록을 초기화할까요?')) return;
     practice={answers:{},graded:[],overrides:{}};
-    for (const question of bank) {$(`#answer-${question.id}`).value='';renderPracticeFeedback(question);}
+    for (const question of practiceBank) {$(`#answer-${question.id}`).value='';renderPracticeFeedback(question);}
     renderPracticeSummary();
     saveStorage(storageKeys.practice,practice);
   });
@@ -126,7 +134,9 @@
   window.addEventListener('hashchange',revealLinkedQuestion);
   renderPracticeSummary();
   revealLinkedQuestion();
+  }
 
+  if ($('#mock')) {
   let timer=null;
   function renderExamSource() {
     const selected=window.LESSON_EXAMS.find((item)=>item.id===(exam?.mode??$('#exam-mode').value));
@@ -273,4 +283,5 @@
   $('#source-frame').addEventListener('load',()=>{
     if ($('#source-frame').hasAttribute('src')) $('#source-frame-status').textContent='정처기 감자 원본 화면 · 표시되지 않으면 새 탭에서 열어 주세요.';
   });
+  }
 })();
