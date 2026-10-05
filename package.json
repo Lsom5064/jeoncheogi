@@ -1,12 +1,13 @@
 {
   "name": "jeongcheogi-practical-class",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
   "description": "정보처리기사 실기 공개 수업자료",
   "scripts": {
     "build": "node scripts/build.mjs",
-    "preview": "node scripts/serve.mjs"
+    "preview": "node scripts/serve.mjs",
+    "test": "node test/grading.test.mjs"
   },
   "devDependencies": {
     "lucide": "^0.468.0",
